@@ -60,7 +60,7 @@ under the License.
          define these here for the animal-sniffer config of commons-parent: -->
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <ant.version>1.9.4</ant.version>
+    <ant.version>1.10.15</ant.version>
     <asm.version>6.2.1</asm.version>
     <invoker.debug>true</invoker.debug>
   </properties>
@@ -169,88 +169,88 @@ under the License.
             <configuration>
               <target xmlns:if="ant:if" xmlns:unless="ant:unless">
                 <presetdef name="truth">
-                  <condition value="true" else="false" />
+                  <condition value="true" else="false"/>
                 </presetdef>
                 <macrodef name="seek">
-                  <attribute name="name" />
-                  <attribute name="addto" />
+                  <attribute name="name"/>
+                  <attribute name="addto"/>
                   <sequential>
                     <augment id="@{addto}-sought">
-                      <string value="@{name}" />
+                      <string value="@{name}"/>
                     </augment>
-                    <union id="@{name}-ws" />
-                    <step dir="${project.basedir}" name="@{name}" addto="@{addto}" ws="@{name}-ws" />
+                    <union id="@{name}-ws"/>
+                    <step dir="${project.basedir}" name="@{name}" addto="@{addto}" ws="@{name}-ws"/>
                   </sequential>
                 </macrodef>
                 <macrodef name="step">
-                  <attribute name="name" />
-                  <attribute name="dir" />
-                  <attribute name="addto" />
-                  <attribute name="ws" />
+                  <attribute name="name"/>
+                  <attribute name="dir"/>
+                  <attribute name="addto"/>
+                  <attribute name="ws"/>
                   <sequential>
-                    <local name="seenDir" />
+                    <local name="seenDir"/>
                     <truth property="seenDir">
                       <resourcecount when="gt" count="0">
                         <intersect id="intersection">
-                          <resources refid="@{ws}" />
-                          <file name="@{dir}" />
+                          <resources refid="@{ws}"/>
+                          <file name="@{dir}"/>
                         </intersect>
                       </resourcecount>
                     </truth>
                     <sequential unless:true="${seenDir}">
                       <augment id="@{ws}">
-                        <file file="@{dir}" />
+                        <file file="@{dir}"/>
                       </augment>
-                      <local name="exists" />
+                      <local name="exists"/>
                       <truth property="exists">
-                        <available file="@{dir}/@{name}" />
+                        <available file="@{dir}/@{name}"/>
                       </truth>
 
                       <sequential if:true="${exists}">
                         <augment id="@{addto}">
-                          <file file="@{dir}/@{name}" />
+                          <file file="@{dir}/@{name}"/>
                         </augment>
                       </sequential>
                       <sequential unless:true="${exists}">
-                        <local name="parent.dir" />
-                        <dirname property="parent.dir" file="@{dir}" />
-                        <step dir="${parent.dir}" name="@{name}" addto="@{addto}" ws="@{ws}" />
+                        <local name="parent.dir"/>
+                        <dirname property="parent.dir" file="@{dir}"/>
+                        <step dir="${parent.dir}" name="@{name}" addto="@{addto}" ws="@{ws}"/>
                       </sequential>
                     </sequential>
                   </sequential>
                 </macrodef>
                 <truth property="pom-only">
-                  <equals arg1="${project.packaging}" arg2="pom" />
+                  <equals arg1="${project.packaging}" arg2="pom"/>
                 </truth>
                 <sequential unless:true="${pom-only}">
-                  <union id="notices" />
-                  <union id="notices-sought" />
-                  <seek name="LICENSE.txt" addto="notices" />
-                  <seek name="NOTICE.txt" addto="notices" />
-                  <seek name="LICENSE-asm${asm.version}.txt" addto="notices" />
+                  <union id="notices"/>
+                  <union id="notices-sought"/>
+                  <seek name="LICENSE.txt" addto="notices"/>
+                  <seek name="NOTICE.txt" addto="notices"/>
+                  <seek name="LICENSE-asm${asm.version}.txt" addto="notices"/>
 
-                  <resourcecount refid="notices-sought" property="notices.sought" />
+                  <resourcecount refid="notices-sought" property="notices.sought"/>
                   <condition property="found-all-notices">
-                    <resourcecount refid="notices" when="eq" count="${notices.sought}" />
+                    <resourcecount refid="notices" when="eq" count="${notices.sought}"/>
                   </condition>
                   <sequential unless:set="found-all-notices">
                     <echo>Notices sought:</echo>
-                    <pathconvert refid="notices-sought" pathsep="${line.separator}" />
+                    <pathconvert refid="notices-sought" pathsep="${line.separator}"/>
                     <echo>Notices found:</echo>
-                    <pathconvert refid="notices" pathsep="${line.separator}" />
-                    <fail message="Some notices not found." />
+                    <pathconvert refid="notices" pathsep="${line.separator}"/>
+                    <fail message="Some notices not found."/>
                   </sequential>
-                  <mkdir dir="${project.build.directory}/generated-resources/notices/META-INF" />
+                  <mkdir dir="${project.build.directory}/generated-resources/notices/META-INF"/>
                   <copy verbose="true" todir="${project.build.directory}/generated-resources/notices/META-INF">
-                    <resources refid="notices" />
+                    <resources refid="notices"/>
                   </copy>
-                  <mkdir dir="${project.build.directory}/generated-test-resources/notices/META-INF" />
+                  <mkdir dir="${project.build.directory}/generated-test-resources/notices/META-INF"/>
                   <copy verbose="true" todir="${project.build.directory}/generated-test-resources/notices/META-INF">
-                    <resources refid="notices" />
+                    <resources refid="notices"/>
                   </copy>
-                  <mkdir dir="${project.build.directory}/apidocs/META-INF" />
+                  <mkdir dir="${project.build.directory}/apidocs/META-INF"/>
                   <copy verbose="true" todir="${project.build.directory}/apidocs/META-INF">
-                    <resources refid="notices" />
+                    <resources refid="notices"/>
                   </copy>
                 </sequential>
               </target>
@@ -393,7 +393,7 @@ under the License.
                 <!-- disable assembly:single from commons-parent
                      release profile; multimodule assembly handled
                      by dist module -->
-                <phase />
+                <phase/>
               </execution>
             </executions>
           </plugin>
