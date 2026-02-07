@@ -151,7 +151,7 @@ under the License.
       <dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-lang3</artifactId>
-        <version>3.8.1</version>
+        <version>3.20.0</version>
       </dependency>
       <dependency>
         <groupId>org.ow2.asm</groupId>
@@ -226,7 +226,7 @@ under the License.
           <artifactId>japicmp-maven-plugin</artifactId>
           <configuration>
             <parameter>
-              <ignoreMissingNewVersion />
+              <ignoreMissingNewVersion/>
               <reportOnlyFilename>true</reportOnlyFilename>
             </parameter>
           </configuration>
@@ -294,7 +294,7 @@ under the License.
               <execution>
                 <id>create-source-jar</id>
                 <!-- suppress execution specified by parent profile -->
-                <phase />
+                <phase/>
               </execution>
             </executions>
           </plugin>
